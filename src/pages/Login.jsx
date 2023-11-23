@@ -32,7 +32,7 @@ function Login() {
     setShowIdErrorMessage(!isValid);
   };
 
-  const pwdlValidTest = pwdInput => {
+  const pwdValidTest = pwdInput => {
     const isValid = REG_EXP.idAndPwd.test(pwdInput);
     setIsPwdValid(isValid);
     setShowPwdErrorMessage(!isValid);
@@ -45,7 +45,7 @@ function Login() {
 
   const handlePwdChange = event => {
     setPwdValue(event.target.value);
-    pwdlValidTest(event.target.value);
+    pwdValidTest(event.target.value);
   };
 
   const handleSubmitBtn = async event => {
@@ -59,10 +59,11 @@ function Login() {
     };
     await axios
       .post(url, data)
-      .then(() => {
+      .then(response => {
         setTimeout(() => {
           dispatch(logIn());
           navigate('/');
+          localStorage.setItem('token', response.data.result.AccessToken);
         }, 1500);
       })
       .catch(error => {
