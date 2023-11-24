@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function ContentItemDetail({ display, title, overview }) {
+function ContentItemDetail({ title, overview }) {
   return (
-    <ItemDetail display={display}>
+    <ItemDetail>
       <ItemDetailTitle>{title}</ItemDetailTitle>
       <ItemDetailOverview>{overview}</ItemDetailOverview>
     </ItemDetail>
@@ -11,13 +11,11 @@ function ContentItemDetail({ display, title, overview }) {
 }
 
 ContentItemDetail.propTypes = {
-  display: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired
 };
 
 const ItemDetail = styled.div`
-  display: ${props => (props.display ? 'block' : 'none')};
   position: absolute;
   top: 0;
   left: 0;

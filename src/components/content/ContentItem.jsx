@@ -25,7 +25,7 @@ function ContentItem({ title, voteAverage, overview, poster, contentType }) {
         <ItemTitle>{title}</ItemTitle>
         <div>{voteAverage}</div>
       </ItemInfo>
-      <ContentItemDetail title={title} overview={overview} display={detail} />
+      {detail && <ContentItemDetail title={title} overview={overview} />}
     </ContentItemWrapper>
   );
 }
