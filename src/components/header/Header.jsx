@@ -19,7 +19,7 @@ function Header() {
         <Link to='/tv'>
           <li>TV 프로그램</li>
         </Link>
-        <Link to='/celebirity'>
+        <Link to='/celebrity'>
           <li>인물</li>
         </Link>
       </Navigator>

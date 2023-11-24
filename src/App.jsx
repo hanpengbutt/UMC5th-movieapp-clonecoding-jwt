@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from './components/header/Header';
 import Movie from './pages/Movie';
 import Home from './pages/Home';
-import Celebirity from './pages/Celebirity';
+import Celebrity from './pages/Celebrity';
 import Tv from './pages/Tv';
 import NotFound from './pages/NotFound';
 import ContentDetail from './pages/ContentDetail';
@@ -22,7 +22,7 @@ function App() {
             <Route path='/movie/:title' element={<ContentDetail />} />
             <Route path='/tv' element={<Tv />} />
             <Route path='/tv/:title' element={<ContentDetail />} />
-            <Route path='/celebirity' element={<Celebirity />} />
+            <Route path='/celebrity' element={<Celebrity />} />
             <Route path='/login' element={<Login />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
