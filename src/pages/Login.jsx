@@ -22,16 +22,30 @@ function Login() {
   const [submitBtnAble, setSubmitBtnAble] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
 
+  /**
+   *
+   * @description isIdValid, isPwdValid 값에 따라 로그인 버튼 활성화 결정
+   */
   useEffect(() => {
     setSubmitBtnAble(isIdValid && isPwdValid);
   }, [isIdValid, isPwdValid]);
 
+  /**
+   *
+   * @param {*} idInput 입력한 id값
+   * @description 입력한 id값의 유효성 검사 결과에 따라 isIdValid, showIdErrorMessage 상태를 변경하는 함수
+   */
   const idValidTest = idInput => {
     const isValid = REG_EXP.idAndPwd.test(idInput);
     setIsIdValid(isValid);
     setShowIdErrorMessage(!isValid);
   };
 
+  /**
+   *
+   * @param {*} pwdInput 입력한 password값
+   * @description 입력한 password값의 유효성 검사 결과에 따라 isPwdValid, showPwdErrorMessage 상태를 변경하는 함수
+   */
   const pwdValidTest = pwdInput => {
     const isValid = REG_EXP.idAndPwd.test(pwdInput);
     setIsPwdValid(isValid);
@@ -48,10 +62,11 @@ function Login() {
     pwdValidTest(event.target.value);
   };
 
-  const handleSubmitBtn = async event => {
-    event.preventDefault();
-    setSubmitBtnAble(false);
-    setShowLoading(true);
+  /**
+   *
+   * @description axios 라이브러리로 로그인 요청을 보내는 함수
+   */
+  const loginRequest = async () => {
     const url = API_URL.login;
     const data = {
       id: idValue,
@@ -64,6 +79,7 @@ function Login() {
           dispatch(logIn());
           navigate('/');
           localStorage.setItem('token', response.data.result.AccessToken);
+          localStorage.setItem('username', response.data.result.username);
         }, 1500);
       })
       .catch(error => {
@@ -76,6 +92,18 @@ function Login() {
           alert(error.response.data.message);
         }, 1500);
       });
+  };
+
+  /**
+   *
+   * @param {*} event
+   * @description 로그인 버튼이 눌렸을 때 기본 이벤트를 막고, 로그인 요청 함수를 호출하는 함수
+   */
+  const handleSubmitBtn = event => {
+    event.preventDefault();
+    setSubmitBtnAble(false);
+    setShowLoading(true);
+    loginRequest();
   };
 
   return (
