@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import REG_EXP from '../constants/regExp';
 import API_URL from '../constants/apiUrl';
-import { logIn } from '../store/reducers';
 
 function Login() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [idValue, setIdValue] = useState('');
@@ -64,7 +61,7 @@ function Login() {
 
   /**
    *
-   * @description axios 라이브러리로 로그인 요청을 보내는 함수
+   * @description 로그인 요청을 보내 로그인에 성공할 경우 localStorage에 토큰과 사용자 이름을 저장해 메인 페이지로 가고, 실패할 경우 실패 원인을 alert로 보내는 함수
    */
   const loginRequest = async () => {
     const url = API_URL.login;
@@ -76,10 +73,15 @@ function Login() {
       .post(url, data)
       .then(response => {
         setTimeout(() => {
-          dispatch(logIn());
           navigate('/');
           localStorage.setItem('token', response.data.result.AccessToken);
           localStorage.setItem('username', response.data.result.username);
+          window.dispatchEvent(
+            new StorageEvent('storage', {
+              key: 'token',
+              newValue: response.data.result.AccessToken
+            })
+          );
         }, 1500);
       })
       .catch(error => {
